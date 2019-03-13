@@ -30,8 +30,6 @@ exports[`Menu Should remove null Item from menu 1`] = `
     >
       <div
         className="react-contexify"
-        onMouseEnter={[Function]}
-        onMouseLeave={[Function]}
         style={
           Object {
             "left": 0,

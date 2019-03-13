@@ -88,7 +88,6 @@ class Menu extends Component<MenuProps, MenuState> {
   bindWindowEvent = () => {
     window.addEventListener('resize', this.hide);
     window.addEventListener('contextmenu', this.hide);
-    window.addEventListener('mousedown', this.hide);
     window.addEventListener('click', this.hide);
     window.addEventListener('scroll', this.hide);
     window.addEventListener('keydown', this.handleKeyboard);
@@ -97,15 +96,10 @@ class Menu extends Component<MenuProps, MenuState> {
   unBindWindowEvent = () => {
     window.removeEventListener('resize', this.hide);
     window.removeEventListener('contextmenu', this.hide);
-    window.removeEventListener('mousedown', this.hide);
     window.removeEventListener('click', this.hide);
     window.removeEventListener('scroll', this.hide);
     window.removeEventListener('keydown', this.handleKeyboard);
   };
-
-  onMouseEnter = () => window.removeEventListener('mousedown', this.hide);
-
-  onMouseLeave = () => window.addEventListener('mousedown', this.hide);
 
   hide = (event?: Event) => {
     // Safari trigger a click event when you ctrl + trackpad
@@ -219,13 +213,7 @@ class Menu extends Component<MenuProps, MenuState> {
     return (
       <Portal>
         {visible && (
-          <div
-            className={cssClasses}
-            style={menuStyle}
-            ref={this.setRef}
-            onMouseEnter={this.onMouseEnter}
-            onMouseLeave={this.onMouseLeave}
-          >
+          <div className={cssClasses} style={menuStyle} ref={this.setRef}>
             <div>
               {cloneItem(children, {
                 nativeEvent,

@@ -2,7 +2,9 @@ import React, { Component, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
+import { HIDE_ALL } from '../utils/actions';
 import { styles } from '../utils/styles';
+import { eventManager } from '../utils/eventManager';
 import {
   MenuItemEventHandler,
   TriggerEvent,
@@ -69,12 +71,15 @@ class Item extends Component<ItemProps> {
   }
 
   handleClick = (e: React.MouseEvent) => {
-    this.isDisabled
-      ? e.stopPropagation()
-      : this.props.onClick({
-          event: this.props.nativeEvent as TriggerEvent,
-          props: { ...this.props.propsFromTrigger, ...this.props.data }
-        });
+    if (this.isDisabled) {
+      e.stopPropagation();
+    } else {
+      this.props.onClick({
+        event: this.props.nativeEvent as TriggerEvent,
+        props: { ...this.props.propsFromTrigger, ...this.props.data }
+      });
+      eventManager.emit(HIDE_ALL);
+    }
   };
 
   render() {

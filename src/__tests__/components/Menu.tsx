@@ -203,31 +203,4 @@ describe('Menu', () => {
 
     expect(component.state('visible')).toBe(true);
   });
-
-  it('Should hide menu when `enter` or `escape` is pressed down', () => {
-    const windowEvent: {
-      [key: string]: (arg: any) => any;
-    } = {};
-    // mock to simulate keyboard events
-    window.addEventListener = jest.fn((event, cb) => {
-      windowEvent[event] = cb;
-    });
-
-    const component = mount(
-      <Menu id={menuId}>
-        <Item>bar</Item>
-      </Menu>
-    );
-    component.setState({ visible: true });
-    const instance = component.instance() as Menu;
-    instance.bindWindowEvent();
-
-    windowEvent.keydown({ keyCode: 13 });
-    expect(component.state('visible')).toBe(false);
-
-    component.setState({ visible: true });
-
-    windowEvent.keydown({ keyCode: 27 });
-    expect(component.state('visible')).toBe(false);
-  });
 });
