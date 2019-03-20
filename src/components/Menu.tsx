@@ -88,7 +88,7 @@ class Menu extends Component<MenuProps, MenuState> {
   bindWindowEvent = () => {
     window.addEventListener('resize', this.hide);
     window.addEventListener('contextmenu', this.hide);
-    window.addEventListener('click', this.hide);
+    window.addEventListener('click', this.hide, { capture: true });
     window.addEventListener('scroll', this.hide);
     window.addEventListener('keydown', this.handleKeyboard);
   };
