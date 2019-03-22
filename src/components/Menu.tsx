@@ -88,7 +88,7 @@ class Menu extends Component<MenuProps, MenuState> {
   bindWindowEvent = () => {
     window.addEventListener('resize', this.hide);
     window.addEventListener('contextmenu', this.hide);
-    window.addEventListener('click', this.hide, { capture: true });
+    window.addEventListener('mousedown', this.hide);
     window.addEventListener('scroll', this.hide);
     window.addEventListener('keydown', this.handleKeyboard);
   };
@@ -96,7 +96,7 @@ class Menu extends Component<MenuProps, MenuState> {
   unBindWindowEvent = () => {
     window.removeEventListener('resize', this.hide);
     window.removeEventListener('contextmenu', this.hide);
-    window.removeEventListener('click', this.hide);
+    window.removeEventListener('mousedown', this.hide);
     window.removeEventListener('scroll', this.hide);
     window.removeEventListener('keydown', this.handleKeyboard);
   };
@@ -112,6 +112,24 @@ class Menu extends Component<MenuProps, MenuState> {
       e.type !== 'contextmenu'
     ) {
       return;
+    }
+
+    // handle outside click
+    if (e && e.type === 'mousedown') {
+      let isInsideClick: boolean = false;
+      let target = e.target as any;
+
+      while (target && target.parentNode && target !== document) {
+        if (target === this.menuRef) {
+          isInsideClick = true;
+          break;
+        }
+        target = target.parentNode;
+      }
+
+      if (isInsideClick) {
+        return;
+      }
     }
 
     this.unBindWindowEvent();
