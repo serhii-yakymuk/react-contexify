@@ -175,6 +175,17 @@ class Menu extends Component<MenuProps, MenuState> {
       y: e.clientY
     };
 
+    if (e.type === 'keydown' && e.target) {
+      const {
+        left,
+        top,
+        height
+      } = (e.target as HTMLElement).getBoundingClientRect();
+
+      pos.x = left;
+      pos.y = top + height;
+    }
+
     if (
       e.type === 'touchend' &&
       (!pos.x || !pos.y) &&
